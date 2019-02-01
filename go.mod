@@ -5,5 +5,6 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/pkg/errors v0.8.1
 	github.com/sirupsen/logrus v1.1.1
+	gopkg.in/src-d/go-errors.v1 v1.0.0
 	gopkg.in/src-d/go-mysql-server.v0 v0.3.0
 )

@@ -3,8 +3,6 @@ package jsonql
 import (
 	"reflect"
 	"strings"
-
-	"gopkg.in/src-d/go-mysql-server.v0/sql"
 )
 
 // People ...
@@ -36,19 +34,4 @@ func (p *People) GetFieldsLen() int {
 // GetFields ...
 func (p *People) GetFields(i int) string {
 	return reflect.TypeOf(p).Elem().Field(i).Name
-}
-
-func checkRow(schema sql.Schema, row sql.Row) error {
-	if len(row) != len(schema) {
-		return sql.ErrUnexpectedRowLength.New(len(schema), len(row))
-	}
-
-	for i, value := range row {
-		c := schema[i]
-		if !c.Check(value) {
-			return sql.ErrInvalidType.New(value)
-		}
-	}
-
-	return nil
 }

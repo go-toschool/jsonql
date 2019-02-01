@@ -16,23 +16,23 @@ func main() {
 	if len(os.Args) >= 2 {
 		dir = os.Args[1]
 	}
-	e := sql.NewDefault()
-	d, err := jsonql.NewDatabase(dir)
+	engine := sql.NewDefault()
+	d, err := jsonql.NewDatabase("logs", dir)
 	if err != nil {
 		logrus.Fatalf("could not create database: %v", err)
 	}
-	e.AddDatabase(d)
+	engine.AddDatabase(d)
 
-	if err := e.Init(); err != nil {
+	if err := engine.Init(); err != nil {
 		logrus.Fatalf("could not initialize server: %v", err)
 	}
 
 	cfg := server.Config{
 		Protocol: "tcp",
-		Address:  "192.168.0.17:3306",
+		Address:  "127.0.0.1:3306",
 		Auth:     auth.NewNativeSingle("user", "pass", auth.AllPermissions),
 	}
-	s, err := server.NewDefaultServer(cfg, e)
+	s, err := server.NewDefaultServer(cfg, engine)
 	if err != nil {
 		logrus.Fatalf("could not create default server: %v", err)
 	}
