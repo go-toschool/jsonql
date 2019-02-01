@@ -1,0 +1,3 @@
+{ "firstname": "John", "lastname": "Doe", "email":"john@doe.com", "phonenumber": "0123456789" }
+{ "firstname": "John", "lastname": "Doe", "email":"john@doe.com", "phonenumber": "9876543210" }
+{ "firstname": "James", "lastname": "Bond", "email":"james@bond.com", "phonenumber": "98765243189" }
