@@ -54,6 +54,7 @@ func NewDatabase(dbname, path string) (*mem.Database, error) {
 		defer f.Close()
 
 		reader := bufio.NewReader(f)
+		// iterate until EOF
 		for {
 			line, _, err := reader.ReadLine()
 			if err == io.EOF {
@@ -62,13 +63,16 @@ func NewDatabase(dbname, path string) (*mem.Database, error) {
 
 			var p People
 
-			line = []byte(strings.TrimSuffix(string(line), "\n"))
+			data := strings.TrimSuffix(string(line), "\n")
+			line = []byte(data)
 			if err := json.Unmarshal(line, &p); err != nil {
 				return nil, errors.Wrapf(err, "could not unmarshal %s", string(line))
 			}
 
 			ctx := sql.NewEmptyContext()
-			table.Insert(ctx, sql.NewRow(p.Firstname, p.Lastname, []string{p.Phonenumber}, time.Now()))
+			// fill table with data
+			row := sql.NewRow(p.Firstname, p.Lastname, []string{p.Phonenumber}, time.Now())
+			table.Insert(ctx, row)
 		}
 	}
 
